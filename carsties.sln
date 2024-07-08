@@ -15,6 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityService", "src\Iden
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatewayService", "src\GatewayService\GatewayService.csproj", "{62EFE241-605C-4794-8FA0-3F0CD874BAA6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{208B29A3-6A0C-4B35-B326-67E45784494D}"
+EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +47,10 @@ Global
 		{62EFE241-605C-4794-8FA0-3F0CD874BAA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62EFE241-605C-4794-8FA0-3F0CD874BAA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62EFE241-605C-4794-8FA0-3F0CD874BAA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66B500DA-3F1B-4145-89FD-9E8877618E85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66B500DA-3F1B-4145-89FD-9E8877618E85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66B500DA-3F1B-4145-89FD-9E8877618E85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66B500DA-3F1B-4145-89FD-9E8877618E85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{ACF9ED0A-E946-45EE-A05E-3E41EB311AB2} = {DEE5C67A-D1CC-40EA-B434-B6851E6BF5A5}

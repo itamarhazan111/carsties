@@ -21,7 +21,7 @@ namespace SearchService.Controllers
                 query.Match(Search.Full,searchParams.searchTerm).SortByTextScore();
             } 
             query=searchParams.OrderBy switch{
-                "Make"=>query.Sort(x=>x.Ascending(x=>x.Make)),
+                "make"=>query.Sort(x=>x.Ascending(x=>x.Make)),
                 "new"=>query.Sort(x=>x.Ascending(x=>x.CreatedAt)),
                 _=>query.Sort(x=>x.Ascending(x=>x.AuctionEnd)),
             };

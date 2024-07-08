@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using AuctionService.DTOs;
 using AuctionService.Entities;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace AuctionService.Data.Repositories
 {
@@ -18,34 +20,47 @@ namespace AuctionService.Data.Repositories
             _context = context;
             _mapper = mapper;
         }
+
         public void AddAuction(Auction auction)
         {
-            throw new NotImplementedException();
+            _context.Auctions.Add(auction);
         }
 
-        public Task<AuctionDto> GetAuctionByIdAsync(Guid id)
+        public async Task<AuctionDto> GetAuctionByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Auctions
+                .ProjectTo<AuctionDto>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<Auction> GetAuctionEntityById(Guid id)
+        public async Task<Auction> GetAuctionEntityById(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Auctions
+                .Include(x => x.Item)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<List<AuctionDto>> GetAuctionsAsync(string date)
+        public async Task<List<AuctionDto>> GetAuctionsAsync(string date)
         {
-            throw new NotImplementedException();
+            var query = _context.Auctions.OrderBy(x => x.Item.Make).AsQueryable();
+
+            if (!string.IsNullOrEmpty(date))
+            {
+                query = query.Where(x => x.UpdatedAt.CompareTo(DateTime.Parse(date).ToUniversalTime()) > 0);
+            }
+
+            return await query.ProjectTo<AuctionDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
         public void RemoveAuction(Auction auction)
         {
-            throw new NotImplementedException();
+            _context.Auctions.Remove(auction);
         }
 
-        public Task<bool> SaveChangesAsync()
+        public async Task<bool> SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            return await _context.SaveChangesAsync() > 0;
         }
+        
     }
 }

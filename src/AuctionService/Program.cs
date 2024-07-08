@@ -14,7 +14,6 @@ builder.Services.AddDbContext<AuctionDbContext>(options=>{
         options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-//builder.Services.AddScoped<IAuctionRepository, AuctionRepository>();
 builder.Services.AddMassTransit(x=>{
     x.AddEntityFrameworkOutbox<AuctionDbContext>(o=>
     {
@@ -25,6 +24,10 @@ builder.Services.AddMassTransit(x=>{
     x.AddConsumersFromNamespaceContaining<AuctionCreatedFaultConsumer>();
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("auction",false));
     x.UsingRabbitMq((context,cfg)=>{
+        cfg.Host(builder.Configuration["RabbitMq:Host"],"/",host=>{
+            host.Username(builder.Configuration.GetValue("RabbitMq:Username","guest")); 
+            host.Password(builder.Configuration.GetValue("RabbitMq:Password","guest")); 
+        });
         cfg.ConfigureEndpoints(context);
     });
 });
@@ -36,6 +39,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.TokenValidationParameters.ValidateAudience=false;
         options.TokenValidationParameters.NameClaimType="username";
     });
+builder.Services.AddScoped<IAuctionRepository, AuctionRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
